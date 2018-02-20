@@ -1,5 +1,23 @@
 from bs4 import BeautifulSoup  # Ukljucujemo biblioteku za Parsovanje HTML-a
 import requests  # Ukljucujemo biblioteku za rad sa URL-om
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+sredinahtmla = str()
+
+mail = smtplib.SMTP('smtp.gmail.com', 587)
+mail.ehlo()
+mail.starttls()
+
+me = "miroljubalert@gmail.com"
+you = "plazar23@gmail.com"
+msg = MIMEMultipart('alternative')
+msg['Subject'] = "NOVI POSTOVI NA FORUMU"
+msg['From'] = me
+msg['To'] = you
+
+pocetakhtmla = '<html><head></head><body><p>'
+krajhtmla = '</p></body></html>'
 
 brojPosta = 0
 
@@ -20,20 +38,22 @@ while (brojPosta % 20) == 0:
     soup = BeautifulSoup(source, 'lxml')  # Ukljucujemo lxml parser, mogli smo i html5lib da odaberemo
 
     # forumHTML = open('forumHTML.txt', 'w', encoding="utf-8")  # Da bih mogao lakše i preglednije da imam uvid u HTML foruma
-    # forumHTML.write(soup.prettify())
-
     Postovi = soup.find_all('td', class_='tbl1 forum_thread_user_post')
     brojPosta = len(Postovi)  # Odnosi se na broj postova na datoj strani. Max 20!
 
-    if stariBrojPosta == brojPosta:
-        print('Nema novih Postova')
-    elif stariBrojPosta != brojPosta:
-        print('---------------------------------------------------------------')
-
     for i in range(stariBrojPosta, brojPosta):
-        print(Postovi[i].text)
-        print('---------------------------------------------------------------')
-    # for Post in Postovi:
+        sredinahtmla = sredinahtmla + '<p><br><br>' + str(Postovi[i].prettify()) + '</p>'
+    # forumHTML.write(str(sredinahtmla))
+
+    html = pocetakhtmla + sredinahtmla + krajhtmla
+    sredinahtmla = ''
+    part = MIMEText(html, 'html')
+    msg.attach(part)
+
+    if stariBrojPosta != brojPosta:
+        mail.login(me, 'idespodmac')
+        mail.sendmail(me, you, msg.as_string())
+
     if brojPosta == 20:
         brojPosta = 0
         ukupnoPostova = ukupnoPostova + 20
@@ -41,4 +61,4 @@ while (brojPosta % 20) == 0:
     pomocni = open('pomocni.txt', 'w', encoding="utf-8")
     pomocni.write(str(ukupnoPostova) + '\n' + str(brojPosta))
 
-# TODO Odvajanje citata od ostalog teksta.
+mail.quit()
