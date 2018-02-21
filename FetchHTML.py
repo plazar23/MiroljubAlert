@@ -10,9 +10,9 @@ mail.ehlo()
 mail.starttls()
 
 me = "miroljubalert@gmail.com"
-you = "plazar23@gmail.com"
+you = "mobrenovic@emisia.net"
 msg = MIMEMultipart('alternative')
-msg['Subject'] = "NOVI POSTOVI NA FORUMU"
+msg['Subject'] = "NOVI POSTOVI"
 msg['From'] = me
 msg['To'] = you
 
@@ -39,10 +39,11 @@ while (brojPosta % 20) == 0:
 
     # forumHTML = open('forumHTML.txt', 'w', encoding="utf-8")  # Da bih mogao lakše i preglednije da imam uvid u HTML foruma
     Postovi = soup.find_all('td', class_='tbl1 forum_thread_user_post')
+    Users = soup.find_all('td', class_='tbl2 forum_thread_user_info')
     brojPosta = len(Postovi)  # Odnosi se na broj postova na datoj strani. Max 20!
 
     for i in range(stariBrojPosta, brojPosta):
-        sredinahtmla = sredinahtmla + '<p><br><br>' + str(Postovi[i].prettify()) + '</p>'
+        sredinahtmla = sredinahtmla + '<p><br><br>' + str(Users[i].prettify()) + str(Postovi[i].prettify()) + '</p>'
     # forumHTML.write(str(sredinahtmla))
 
     html = pocetakhtmla + sredinahtmla + krajhtmla
