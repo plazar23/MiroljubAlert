@@ -10,7 +10,7 @@ soup = BeautifulSoup(source, 'lxml')  # Ukljucujemo lxml parser, mogli smo i htm
 
 # Users = soup.find_all('td', class_='tbl2 forum_thread_user_info')
 
-forumHTML = open('forumHTML.txt', 'w', encoding="utf-8")  # Da bih mogao lakše i preglednije da imam uvid u HTML foruma
+forumHTML = open('forumHTML.html', 'w', encoding="utf-8")  # Da bih mogao lakše i preglednije da imam uvid u HTML foruma
 
 # for User in Users:
 #     forumHTML.write(str(User.prettify()))
