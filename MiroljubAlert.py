@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup  # Ukljucujemo biblioteku za Parsovanje HTML-a
 import requests  # Ukljucujemo biblioteku za rad sa URL-om
-
+# E ovako se komentarise kod. ;) samo gde treba
 brojPosta = 0
 
 while (brojPosta % 20) == 0:
