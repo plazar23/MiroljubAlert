@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from bs4 import BeautifulSoup  # Ukljucujemo biblioteku za Parsovanje HTML-a
 import requests  # Ukljucujemo biblioteku za rad sa URL-om
 import smtplib
@@ -10,7 +11,7 @@ mail.ehlo()
 mail.starttls()
 
 me = "miroljubalert@gmail.com"
-you = "plazar23@gmail.com"
+you = "mobrenovic@emisia.net"
 sifra = "idespodmac"
 msg = MIMEMultipart('alternative')
 msg['Subject'] = "NOVI POSTOVI"
